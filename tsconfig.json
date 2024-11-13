@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "rootDir": "./api",
+    "outDir": "./api/dist",
+    "target": "ES6",
+    "module": "CommonJS",
+    "strict": true,
+    "esModuleInterop": true,
+    "typeRoots": ["./node_modules/@types", "./api/types"]
+  },
+  "include": ["./api/**/*"],
+  "exclude": ["node_modules"]
+  
+}

@@ -1,8 +1,8 @@
 import express from "express";
-import dotenv from "dotenv";
-
-dotenv.config();
-
+import { protectRoute } from "../middleware/auth";
+import { updateProfile } from "../controllers/user.controller";
 const router = express.Router();
+
+router.put("/:id", protectRoute, updateProfile);
 
 export default router;

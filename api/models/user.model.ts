@@ -8,6 +8,10 @@ class UserModel {
     return this.users;
   }
 
+  findByMatch(matchId: string[]): User[] {
+    return this.users.filter((user) => matchId.includes(user.id));
+  }
+
   findById(id: string): User | undefined {
     const user = this.users.find((user) => user.id === id);
     if (!user) return undefined;

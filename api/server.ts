@@ -4,6 +4,8 @@ import cookieParser from "cookie-parser";
 
 // Routes
 import authRoutes from "./routes/auth.routes";
+import userRoutes from "./routes/user.routes";
+import matchRoutes from "./routes/match.routes";
 
 dotenv.config();
 
@@ -14,9 +16,9 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use("/api/auth", authRoutes);
-app.use("api/users");
-app.use("api/matches");
-app.use("api/messages");
+app.use("/api/users", userRoutes);
+app.use("/api/matches", matchRoutes);
+//app.use("/api/messages", messageRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

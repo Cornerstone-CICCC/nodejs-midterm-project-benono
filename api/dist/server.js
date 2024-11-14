@@ -8,15 +8,17 @@ const dotenv_1 = __importDefault(require("dotenv"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
 // Routes
 const auth_routes_1 = __importDefault(require("./routes/auth.routes"));
+const user_routes_1 = __importDefault(require("./routes/user.routes"));
+const match_routes_1 = __importDefault(require("./routes/match.routes"));
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 const PORT = Number(process.env.PORT) || 3500;
 app.use(express_1.default.json());
 app.use((0, cookie_parser_1.default)());
 app.use("/api/auth", auth_routes_1.default);
-app.use("api/users");
-app.use("api/matches");
-app.use("api/messages");
+app.use("/api/users", user_routes_1.default);
+app.use("/api/matches", match_routes_1.default);
+//app.use("/api/messages", messageRoutes);
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
     // connect to database

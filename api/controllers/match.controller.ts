@@ -88,8 +88,16 @@ export const getUserProfiles = async (req: Request, res: Response) => {
       .filter((user) => user.genderPreference === currentUser?.gender)
       .filter((user) => currentUser?.genderPreference === user.gender)
       .map((user) => ({
+        id: user.id,
         name: user.name,
         image: user.image,
+        age: user.age,
+        bio: user.bio,
+        gender: user.gender,
+        genderPreference: user.genderPreference,
+        likes: user.likes,
+        dislikes: user.dislikes,
+        matches: user.matches,
       }));
 
     res.status(200).json({ success: true, users });

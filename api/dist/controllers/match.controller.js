@@ -95,8 +95,16 @@ const getUserProfiles = (req, res) => __awaiter(void 0, void 0, void 0, function
             .filter((user) => user.genderPreference === (currentUser === null || currentUser === void 0 ? void 0 : currentUser.gender))
             .filter((user) => (currentUser === null || currentUser === void 0 ? void 0 : currentUser.genderPreference) === user.gender)
             .map((user) => ({
+            id: user.id,
             name: user.name,
             image: user.image,
+            age: user.age,
+            bio: user.bio,
+            gender: user.gender,
+            genderPreference: user.genderPreference,
+            likes: user.likes,
+            dislikes: user.dislikes,
+            matches: user.matches,
         }));
         res.status(200).json({ success: true, users });
     }

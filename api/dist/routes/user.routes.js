@@ -7,5 +7,5 @@ const express_1 = __importDefault(require("express"));
 const auth_1 = require("../middleware/auth");
 const user_controller_1 = require("../controllers/user.controller");
 const router = express_1.default.Router();
-router.put("/:id", auth_1.protectRoute, user_controller_1.updateProfile);
+router.put("/update", auth_1.protectRoute, user_controller_1.updateProfile);
 exports.default = router;

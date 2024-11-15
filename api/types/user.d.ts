@@ -15,7 +15,13 @@ export type User = {
 
 export interface UserPayload {
   id: string;
-  username: string;
+  name: string;
+  email: string;
+  age: number;
+  gender: Gender;
+  genderPreference: Gender;
+  bio: string;
+  image: string;
 }
 
 export type Gender = "male" | "female";

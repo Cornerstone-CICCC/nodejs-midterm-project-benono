@@ -36,7 +36,8 @@ export async function protectRoute(
         .json({ success: false, message: "Unauthorized - User not found" });
       return;
     }
-    req.user = { id: currentUser.id, username: currentUser.name };
+    const { password, ...userWithoutPassword } = currentUser;
+    req.user = userWithoutPassword;
     next();
   } catch (error) {
     console.log(`Error in protectRoute middleware: ${error}`);

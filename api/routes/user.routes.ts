@@ -3,6 +3,6 @@ import { protectRoute } from "../middleware/auth";
 import { updateProfile } from "../controllers/user.controller";
 const router = express.Router();
 
-router.put("/:id", protectRoute, updateProfile);
+router.put("/update", protectRoute, updateProfile);
 
 export default router;

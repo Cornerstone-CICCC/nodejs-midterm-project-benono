@@ -2,16 +2,11 @@ import { create } from "zustand";
 import { axiosInstance } from "../lib/axios";
 import toast from "react-hot-toast";
 import { AxiosError } from "axios";
-interface User {
-  name: string;
-  email: string;
-  password: string;
-  age: number;
-  gender: string;
-  genderPreference: string;
-}
 
-type LoginUser = Omit<User, "name" | "age" | "gender" | "genderPreference">;
+type LoginUser = Omit<
+  User,
+  "name" | "age" | "gender" | "genderPreference" | "image" | "bio"
+>;
 
 interface AuthStore {
   authUser: User | null;

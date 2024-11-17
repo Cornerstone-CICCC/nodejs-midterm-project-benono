@@ -52,7 +52,6 @@ class UserModel {
                 if (cnt === 2)
                     return;
             });
-            console.log(this.users);
         }
         return user;
     }

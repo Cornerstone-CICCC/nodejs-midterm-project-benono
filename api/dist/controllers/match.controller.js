@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getUserProfiles = exports.getMatches = exports.swipeLeft = exports.swipeRight = void 0;
 const user_model_1 = __importDefault(require("../models/user.model"));
+const socket_server_1 = require("../socket/socket.server");
 const swipeRight = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { likedUserId } = req.params;
@@ -33,7 +34,24 @@ const swipeRight = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
             if (likedUser.likes.includes(currentUser.id)) {
                 currentUser.matches.push(likedUserId);
                 likedUser.matches.push(currentUser.id);
-                // TODO send notification if it is a match => socket.io
+                // send notification to both users in realtime with socket.io
+                const connectedUsers = (0, socket_server_1.getConnectedUsers)();
+                const likedUserSocketId = connectedUsers.get(likedUserId);
+                if (likedUserSocketId) {
+                    (0, socket_server_1.getIO)().to(likedUserSocketId).emit("new-match", {
+                        _id: currentUser.id,
+                        name: currentUser.name,
+                        image: currentUser.image,
+                    });
+                }
+                const currentUserSocketId = connectedUsers.get(currentUser.id);
+                if (currentUserSocketId) {
+                    (0, socket_server_1.getIO)().to(currentUserSocketId).emit("new-match", {
+                        _id: likedUser.id,
+                        name: likedUser.name,
+                        image: likedUser.image,
+                    });
+                }
             }
         }
         res.status(200).json({ success: true, user: currentUser });

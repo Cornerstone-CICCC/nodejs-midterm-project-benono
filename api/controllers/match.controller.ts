@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import User from "../models/user.model";
+import { getIO, getConnectedUsers } from "../socket/socket.server";
 
 export const swipeRight = async (req: Request, res: Response) => {
   try {
@@ -22,7 +23,24 @@ export const swipeRight = async (req: Request, res: Response) => {
       if (likedUser.likes.includes(currentUser.id)) {
         currentUser.matches.push(likedUserId);
         likedUser.matches.push(currentUser.id);
-        // TODO send notification if it is a match => socket.io
+        // send notification to both users in realtime with socket.io
+        const connectedUsers = getConnectedUsers();
+        const likedUserSocketId = connectedUsers.get(likedUserId);
+        if (likedUserSocketId) {
+          getIO().to(likedUserSocketId).emit("new-match", {
+            _id: currentUser.id,
+            name: currentUser.name,
+            image: currentUser.image,
+          });
+        }
+        const currentUserSocketId = connectedUsers.get(currentUser.id);
+        if (currentUserSocketId) {
+          getIO().to(currentUserSocketId).emit("new-match", {
+            _id: likedUser.id,
+            name: likedUser.name,
+            image: likedUser.image,
+          });
+        }
       }
     }
 

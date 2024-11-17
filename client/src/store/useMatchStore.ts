@@ -2,6 +2,7 @@ import { create } from "zustand";
 import { axiosInstance } from "../lib/axios";
 import toast from "react-hot-toast";
 import { AxiosError } from "axios";
+import { getSocket } from "../socket/socket.client";
 interface MatchStore {
   matches: Match[];
   isLoadingMyMatches: boolean;
@@ -12,6 +13,8 @@ interface MatchStore {
   swipeFeedback: string;
   swipeRight: (user: User) => Promise<void>;
   swipeLeft: (user: User) => Promise<void>;
+  subscribeToNewMatches: () => void;
+  unsubscribeFromNewMatches: () => void;
 }
 
 export const useMatchStore = create<MatchStore>((set) => ({
@@ -82,6 +85,30 @@ export const useMatchStore = create<MatchStore>((set) => ({
       setTimeout(() => {
         set({ swipeFeedback: "" });
       }, 1500);
+    }
+  },
+
+  subscribeToNewMatches: () => {
+    try {
+      const socket = getSocket();
+      socket.on("new-match", (data) => {
+        set((state) => ({
+          matches: [...state.matches, data],
+        }));
+        console.log(data);
+        toast.success("You matched with " + data.name);
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  },
+
+  unsubscribeFromNewMatches: () => {
+    try {
+      const socket = getSocket();
+      socket.off("new-match");
+    } catch (error) {
+      console.error(error);
     }
   },
 }));

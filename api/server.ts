@@ -9,6 +9,7 @@ import { initializeSocket } from "./socket/socket.server";
 import authRoutes from "./routes/auth.routes";
 import userRoutes from "./routes/user.routes";
 import matchRoutes from "./routes/match.routes";
+import messageRoutes from "./routes/message.routes";
 
 dotenv.config();
 
@@ -30,7 +31,7 @@ app.use(
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/matches", matchRoutes);
-//app.use("/api/messages", messageRoutes);
+app.use("/api/messages", messageRoutes);
 
 httpServer.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

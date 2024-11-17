@@ -39,15 +39,16 @@ const swipeRight = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
                 const likedUserSocketId = connectedUsers.get(likedUserId);
                 if (likedUserSocketId) {
                     (0, socket_server_1.getIO)().to(likedUserSocketId).emit("new-match", {
-                        _id: currentUser.id,
+                        id: currentUser.id,
                         name: currentUser.name,
                         image: currentUser.image,
                     });
                 }
+                console.log(`likedUser: ${JSON.stringify(likedUser)}`);
                 const currentUserSocketId = connectedUsers.get(currentUser.id);
                 if (currentUserSocketId) {
                     (0, socket_server_1.getIO)().to(currentUserSocketId).emit("new-match", {
-                        _id: likedUser.id,
+                        id: likedUser.id,
                         name: likedUser.name,
                         image: likedUser.image,
                     });
@@ -91,6 +92,7 @@ const getMatches = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         }
         // get all users that matched the user and filter fields
         const matches = (_a = user_model_1.default.findByMatch(user.matches)) === null || _a === void 0 ? void 0 : _a.map((user) => ({
+            id: user.id,
             name: user.name,
             image: user.image,
         }));

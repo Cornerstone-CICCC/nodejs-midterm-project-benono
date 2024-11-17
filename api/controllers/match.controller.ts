@@ -26,17 +26,19 @@ export const swipeRight = async (req: Request, res: Response) => {
         // send notification to both users in realtime with socket.io
         const connectedUsers = getConnectedUsers();
         const likedUserSocketId = connectedUsers.get(likedUserId);
+
         if (likedUserSocketId) {
           getIO().to(likedUserSocketId).emit("new-match", {
-            _id: currentUser.id,
+            id: currentUser.id,
             name: currentUser.name,
             image: currentUser.image,
           });
         }
+        console.log(`likedUser: ${JSON.stringify(likedUser)}`);
         const currentUserSocketId = connectedUsers.get(currentUser.id);
         if (currentUserSocketId) {
           getIO().to(currentUserSocketId).emit("new-match", {
-            _id: likedUser.id,
+            id: likedUser.id,
             name: likedUser.name,
             image: likedUser.image,
           });
@@ -83,6 +85,7 @@ export const getMatches = async (
     }
     // get all users that matched the user and filter fields
     const matches = User.findByMatch(user.matches)?.map((user) => ({
+      id: user.id,
       name: user.name,
       image: user.image,
     }));

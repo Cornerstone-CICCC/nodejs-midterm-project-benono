@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getConversation = exports.sendMessage = void 0;
 const message_model_1 = __importDefault(require("../models/message.model"));
+const socket_server_1 = require("../socket/socket.server");
 const sendMessage = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { content, receiverId } = req.body;
@@ -22,7 +23,11 @@ const sendMessage = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
             senderId: req.user.id,
             receiverId,
         });
-        // TODO send the message in real time => socket.io
+        const connectedUser = (0, socket_server_1.getConnectedUsers)();
+        const receiverSocketId = connectedUser.get(receiverId);
+        if (receiverSocketId) {
+            (0, socket_server_1.getIO)().to(receiverSocketId).emit("newMessage", message);
+        }
         res.status(201).json({ success: true, message });
     }
     catch (error) {

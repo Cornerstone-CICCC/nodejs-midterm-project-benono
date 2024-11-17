@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import messageModel from "../models/message.model";
+import { getIO, getConnectedUsers } from "../socket/socket.server";
 
 export const sendMessage = async (req: Request, res: Response) => {
   try {
@@ -10,7 +11,11 @@ export const sendMessage = async (req: Request, res: Response) => {
       receiverId,
     });
 
-    // TODO send the message in real time => socket.io
+    const connectedUser = getConnectedUsers();
+    const receiverSocketId = connectedUser.get(receiverId);
+    if (receiverSocketId) {
+      getIO().to(receiverSocketId).emit("newMessage", message);
+    }
     res.status(201).json({ success: true, message });
   } catch (error) {
     console.error(`Error in sendMessage controller: ${error}`);

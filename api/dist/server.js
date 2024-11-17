@@ -13,6 +13,7 @@ const socket_server_1 = require("./socket/socket.server");
 const auth_routes_1 = __importDefault(require("./routes/auth.routes"));
 const user_routes_1 = __importDefault(require("./routes/user.routes"));
 const match_routes_1 = __importDefault(require("./routes/match.routes"));
+const message_routes_1 = __importDefault(require("./routes/message.routes"));
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 const httpServer = (0, http_1.createServer)(app);
@@ -27,7 +28,7 @@ app.use((0, cors_1.default)({
 app.use("/api/auth", auth_routes_1.default);
 app.use("/api/users", user_routes_1.default);
 app.use("/api/matches", match_routes_1.default);
-//app.use("/api/messages", messageRoutes);
+app.use("/api/messages", message_routes_1.default);
 httpServer.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
     // connect to database

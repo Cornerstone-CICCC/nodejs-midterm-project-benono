@@ -8,6 +8,6 @@ import { protectRoute } from "../middleware/auth";
 const router = express.Router();
 
 router.post("/send", protectRoute, sendMessage);
-router.get("/conversation/:muserId", protectRoute, getConversation);
+router.get("/conversation/:userId", protectRoute, getConversation);
 
 export default router;

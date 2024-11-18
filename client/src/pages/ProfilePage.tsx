@@ -6,7 +6,6 @@ import { useAuthStore } from "../store/useAuthStore";
 import { useUserStore } from "../store/useUserStore";
 const ProfilePage = () => {
   const { authUser } = useAuthStore();
-  console.log(authUser);
   const [name, setName] = useState(authUser?.name || "");
   const [bio, setBio] = useState(authUser?.bio || "");
   const [age, setAge] = useState(authUser?.age || "");
@@ -37,7 +36,6 @@ const ProfilePage = () => {
       const reader = new FileReader();
       reader.onloadend = () => {
         setImage(reader.result as string);
-        console.log(reader.result);
       };
       reader.readAsDataURL(file);
     }

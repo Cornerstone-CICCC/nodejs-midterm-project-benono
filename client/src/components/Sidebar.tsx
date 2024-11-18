@@ -10,6 +10,7 @@ const Sidebar = () => {
   const { matches, isLoadingMyMatches, getMyMatches } = useMatchStore();
   useEffect(() => {
     getMyMatches();
+    console.log("matches", matches);
   }, [getMyMatches]);
   return (
     <>
@@ -37,7 +38,7 @@ const Sidebar = () => {
               <NoMatchesFound />
             ) : (
               matches.map((match) => (
-                <Link to={`/chat/${match._id}`} key={match._id}>
+                <Link to={`/chat/${match.id}`} key={match.id}>
                   <div className="flex items-center mb-4 cursor-pointer hover:bg-pink-50 p-2 rounded-lg transition-colors duration-300">
                     <img
                       src={match.image || "/avatar.png"}

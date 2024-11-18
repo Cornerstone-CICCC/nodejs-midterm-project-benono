@@ -6,7 +6,6 @@ const SOCKET_URL = "http://localhost:3500";
 let socket: Socket | null = null;
 
 export const initializeSocket = (userId: string) => {
-  console.log(userId);
   if (socket) {
     socket.disconnect();
   }

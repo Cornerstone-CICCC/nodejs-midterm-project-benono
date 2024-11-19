@@ -43,15 +43,17 @@ class UserModel {
         this.users.push(user);
         // if in development mode, some of initial user will like craeted user by gender preference
         if (process.env.NODE_ENV === "development") {
-            const seedsId = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
-            const initialUser = this.users.filter((data) => seedsId.includes(data.id) && user.gender === data.genderPreference);
-            let cnt = 0;
-            initialUser.forEach((data) => {
-                data.likes.push(user.id);
-                cnt++;
-                if (cnt === 2)
-                    return;
-            });
+            // const seedsId = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
+            // const initialUser = this.users.filter(
+            //   (data) =>
+            //     seedsId.includes(data.id) && user.gender === data.genderPreference
+            // );
+            // let cnt = 0;
+            // initialUser.forEach((data) => {
+            //   data.likes.push(user.id);
+            //   cnt++;
+            //   if (cnt === 2) return;
+            // });
         }
         return user;
     }

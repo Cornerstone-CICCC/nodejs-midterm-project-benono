@@ -3,7 +3,7 @@ import { useMatchStore } from "../store/useMatchStore";
 const getFeetbackStyle = (swipeFeedback: string) => {
   if (swipeFeedback === "liked") return "text-green-500";
   if (swipeFeedback === "passed") return "text-red-500";
-  if (swipeFeedback === "matched") return "text-pink-500";
+  if (swipeFeedback === "matched") return "text-indigo-500";
 };
 
 const getFeedbackText = (swipeFeedback: string) => {

@@ -17,7 +17,7 @@ interface AuthStore {
   signup: (user: Partial<User>) => Promise<void>;
   login: (loginUser: LoginUser) => Promise<void>;
   logout: () => Promise<void>;
-  setAuthUser: (user: User) => void;
+  setAuthUser: (user: User | null) => void;
 }
 
 export const useAuthStore = create<AuthStore>((set) => ({
@@ -82,7 +82,7 @@ export const useAuthStore = create<AuthStore>((set) => ({
       console.log(error);
     }
   },
-  setAuthUser: (user: User) => {
+  setAuthUser: (user: User | null) => {
     set({ authUser: user });
   },
 }));

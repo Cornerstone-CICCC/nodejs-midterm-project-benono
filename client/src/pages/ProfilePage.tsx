@@ -16,7 +16,8 @@ const ProfilePage = () => {
   const [image, setImage] = useState(authUser?.image || "");
 
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const { updateProfile, loading } = useUserStore();
+  const { updateProfile, deleteAccount, loading } = useUserStore();
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -204,7 +205,37 @@ const ProfilePage = () => {
               >
                 {loading ? "Saving..." : "Save"}
               </button>
+              <button
+                type="button"
+                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 
+								focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                onClick={() => setShowDeleteModal(true)}
+              >
+                Delete Account
+              </button>
             </form>
+            {showDeleteModal && (
+              <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                <div className="bg-white p-6 rounded-lg">
+                  <h4 className="text-xl font-bold mb-4">Delete Account?</h4>
+                  <p className="mb-4">This action cannot be undone.</p>
+                  <div className="flex gap-4">
+                    <button
+                      onClick={() => setShowDeleteModal(false)}
+                      className="bg-gray-200 px-4 py-2 rounded"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      onClick={deleteAccount}
+                      className="bg-red-600 text-white px-4 py-2 rounded"
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>

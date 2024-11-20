@@ -7,6 +7,7 @@ import { AxiosError } from "axios";
 interface UserStore {
   loading: boolean;
   updateProfile: (user: Partial<User>) => Promise<void>;
+  deleteAccount: () => Promise<void>;
 }
 
 export const useUserStore = create<UserStore>((set) => ({
@@ -25,6 +26,19 @@ export const useUserStore = create<UserStore>((set) => ({
       }
     } finally {
       set({ loading: false });
+    }
+  },
+  deleteAccount: async () => {
+    try {
+      await axiosInstance.delete("/users/delete");
+      useAuthStore.getState().setAuthUser(null);
+      toast.success("Account deleted successfully");
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        toast.error(error.response?.data.message);
+      } else {
+        toast.error("Something went wrong");
+      }
     }
   },
 }));

@@ -8,4 +8,5 @@ const auth_1 = require("../middleware/auth");
 const user_controller_1 = require("../controllers/user.controller");
 const router = express_1.default.Router();
 router.put("/update", auth_1.protectRoute, user_controller_1.updateProfile);
+router.delete("/delete", auth_1.protectRoute, user_controller_1.deleteUser);
 exports.default = router;

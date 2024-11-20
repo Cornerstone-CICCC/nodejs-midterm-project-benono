@@ -33,3 +33,13 @@ export const updateProfile = async (req: Request, res: Response) => {
     res.status(500).json({ success: false, message: "Internal server error" });
   }
 };
+
+export const deleteUser = async (req: Request, res: Response) => {
+  const deletedUser = User.delete(req.user!.id);
+  if (!deletedUser) {
+    res.status(404).json({ success: false, message: "User not found" });
+    return;
+  }
+  res.clearCookie("token");
+  res.status(200).json({ success: true, message: "User deleted successfully" });
+};

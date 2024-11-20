@@ -23,7 +23,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateProfile = void 0;
+exports.deleteUser = exports.updateProfile = void 0;
 const cloudinary_1 = __importDefault(require("../config/cloudinary"));
 const user_model_1 = __importDefault(require("../models/user.model"));
 const updateProfile = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -56,3 +56,13 @@ const updateProfile = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     }
 });
 exports.updateProfile = updateProfile;
+const deleteUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const deletedUser = user_model_1.default.delete(req.user.id);
+    if (!deletedUser) {
+        res.status(404).json({ success: false, message: "User not found" });
+        return;
+    }
+    res.clearCookie("token");
+    res.status(200).json({ success: true, message: "User deleted successfully" });
+});
+exports.deleteUser = deleteUser;
